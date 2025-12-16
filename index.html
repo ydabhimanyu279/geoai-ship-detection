@@ -1,1 +1,103 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoAI Ship Detection - Live Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .stat-label {
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        iframe {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛰️ GeoAI Ship Detection</h1>
+        <p style="font-size: 1.2em;">Deep Learning + Geographic Information Systems</p>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value">83%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">154</div>
+                <div class="stat-label">Ships Detected</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">66%</div>
+                <div class="stat-label">Recall</div>
+            </div>
+        </div>
+        
+        <h2>Interactive Detection Map</h2>
+        <p>Real ship detections with GPS coordinates</p>
+        
+        <iframe src="outputs/visualizations/ship_detections_map.html"></iframe>
+        
+        <div style="margin-top: 30px;">
+            <a href="https://github.com/ydabhimanyu279/geoai-ship-detection" class="btn">
+                View on GitHub
+            </a>
+        </div>
+    </div>
+</body>
+</html>
