@@ -1,0 +1,17 @@
+torch
+torchvision
+numpy
+pandas
+opencv-python
+pillow
+matplotlib
+rasterio
+geopandas
+shapely
+fiona
+pyproj
+folium
+tqdm
+scikit-learn
+albumentations
+jupyter
