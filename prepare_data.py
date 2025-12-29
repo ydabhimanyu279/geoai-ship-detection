@@ -72,14 +72,14 @@ for idx in range(len(labels)):
         data_records.append(record)
 
 df = pd.DataFrame(data_records)
-print(f"\n✓ Created {len(df)} records")
+print(f"\nCreated {len(df)} records")
 
 # Balance dataset - take all ships + equal number of no-ships
 ship_df = df[df['has_ship'] == 1]
 no_ship_df = df[df['has_ship'] == 0].sample(n=len(ship_df), random_state=42)
 
 balanced_df = pd.concat([ship_df, no_ship_df]).reset_index(drop=True)
-print(f"\n✓ Balanced dataset: {len(balanced_df)} images")
+print(f"\nBalanced dataset: {len(balanced_df)} images")
 print(f"  Ships: {len(ship_df)}")
 print(f"  No ships: {len(no_ship_df)}")
 
@@ -181,6 +181,6 @@ for idx, (ax, (_, row)) in enumerate(zip(axes.flat, sample_ships.iterrows())):
 
 plt.tight_layout()
 plt.savefig('outputs/visualizations/bbox_samples.png', dpi=150, bbox_inches='tight')
-print("✓ Saved to: outputs/visualizations/bbox_samples.png")
+print("Saved to: outputs/visualizations/bbox_samples.png")
 
 print("\n Ready for training with Focal Loss!")

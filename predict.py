@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 def load_model(model_path, device):
     """Load trained model"""
-    print(f"📦 Loading model from {model_path}")
+    print(f"Loading model from {model_path}")
     
     model = create_model(num_classes=2, pretrained=False)
     checkpoint = torch.load(model_path, map_location=device)
@@ -22,7 +22,7 @@ def load_model(model_path, device):
     model.to(device)
     model.eval()
     
-    print(f"  ✓ Model loaded (epoch {checkpoint['epoch']}, val_acc: {checkpoint['val_acc']:.2f}%)")
+    print(f"Model loaded (epoch {checkpoint['epoch']}, val_acc: {checkpoint['val_acc']:.2f}%)")
     return model
 
 def predict_on_dataset(model, annotations_csv, images_dir, device, confidence_threshold=0.5):
@@ -30,7 +30,7 @@ def predict_on_dataset(model, annotations_csv, images_dir, device, confidence_th
     
     # Load annotations (contains lat/lon)
     df = pd.read_csv(annotations_csv)
-    print(f"\n🔍 Running predictions on {len(df)} images...")
+    print(f"\nRunning predictions on {len(df)} images...")
     
     transform = get_val_transforms(img_size=80)
     
@@ -111,7 +111,7 @@ def visualize_predictions(detections, images_dir, output_path, num_samples=16):
     
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches='tight')
-    print(f"  ✓ Saved visualization to {output_path}")
+    print(f"  Saved visualization to {output_path}")
 
 def calculate_metrics(detections, df):
     """Calculate detection metrics"""
@@ -152,7 +152,7 @@ def main():
     CONFIDENCE_THRESHOLD = 0.45
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"🔧 Using device: {device}")
+    print(f"Using device: {device}")
     
     # Load model
     model = load_model(MODEL_PATH, device)
@@ -163,14 +163,14 @@ def main():
         device, CONFIDENCE_THRESHOLD
     )
     
-    print(f"\n📊 Detection Results:")
+    print(f"\nDetection Results:")
     print(f"  Total test images: {len(df)}")
     print(f"  Ships detected: {len(detections)}")
     print(f"  Confidence threshold: {CONFIDENCE_THRESHOLD}")
     
     # Calculate metrics
     metrics = calculate_metrics(detections, df)
-    print(f"\n📈 Performance Metrics:")
+    print(f"\nPerformance Metrics:")
     print(f"  Precision: {metrics['precision']:.3f}")
     print(f"  Recall: {metrics['recall']:.3f}")
     print(f"  F1-Score: {metrics['f1_score']:.3f}")
@@ -179,41 +179,41 @@ def main():
     print(f"  False Negatives: {metrics['false_negatives']}")
     
     if len(detections) == 0:
-        print("\n⚠️  No ships detected! Try lowering confidence threshold.")
+        print("\nNo ships detected! Try lowering confidence threshold.")
         return
     
     # Visualize predictions
-    print("\n🖼️  Creating visualizations...")
+    print("\nCreating visualizations...")
     visualize_predictions(
         detections, TEST_IMAGES, 
         'outputs/visualizations/test_predictions.png'
     )
     
     # Convert to GeoDataFrame (THE KEY PART FOR ESRI!)
-    print("\n🌍 Converting to geospatial format...")
+    print("\nConverting to geospatial format...")
     gdf = detections_to_geodataframe(detections)
     
-    print(f"\n✓ Created GeoDataFrame with {len(gdf)} ship detections")
+    print(f"\nCreated GeoDataFrame with {len(gdf)} ship detections")
     print(f"\nSample detections:")
     print(gdf[['class', 'confidence', 'lat', 'lon']].head())
     
     # Export to GIS formats
-    print("\n💾 Exporting to GIS formats...")
+    print("\nExporting to GIS formats...")
     export_to_shapefile(gdf, 'outputs/shapefiles/ship_detections.shp')
     export_to_geojson(gdf, 'outputs/shapefiles/ship_detections.geojson')
     
     # Create interactive map
-    print("\n🗺️  Creating interactive map...")
+    print("\nCreating interactive map...")
     from utils.visualization import create_interactive_map
     create_interactive_map(gdf, 'outputs/visualizations/ship_detections_map.html')
     
     # Save detection results as CSV
     detection_df = pd.DataFrame(detections)
     detection_df.to_csv('outputs/results/detections.csv', index=False)
-    print(f"  ✓ Saved CSV to outputs/results/detections.csv")
+    print(f"  Saved CSV to outputs/results/detections.csv")
     
-    print("\n✅ Prediction pipeline complete!")
-    print("\n📂 Output files:")
+    print("\nPrediction pipeline complete!")
+    print("\nOutput files:")
     print("  - outputs/shapefiles/ship_detections.shp (Shapefile for ArcGIS)")
     print("  - outputs/shapefiles/ship_detections.geojson (GeoJSON)")
     print("  - outputs/visualizations/ship_detections_map.html (Interactive map)")

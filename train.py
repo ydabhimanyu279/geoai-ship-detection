@@ -164,7 +164,7 @@ def main():
     )
     
     # Training loop
-    print(f"\n🚀 Starting training for {NUM_EPOCHS} epochs...")
+    print(f"\nStarting training for {NUM_EPOCHS} epochs...")
     print(f"   Focal Loss: alpha={FOCAL_ALPHA}, gamma={FOCAL_GAMMA}\n")
     
     best_val_loss = float('inf')
@@ -193,7 +193,7 @@ def main():
         scheduler.step(val_loss)
         
         # Print epoch summary
-        print(f"\n📊 Epoch {epoch} Summary:")
+        print(f"\nEpoch {epoch} Summary:")
         print(f"  Train Loss: {train_loss:.4f} (cls: {train_cls:.4f}, bbox: {train_bbox:.4f})")
         print(f"  Val Loss:   {val_loss:.4f} (cls: {val_cls:.4f}, bbox: {val_bbox:.4f})")
         print(f"  Val Accuracy: {val_acc:.2f}%")
@@ -214,10 +214,10 @@ def main():
                 'val_loss': val_loss,
                 'val_acc': val_acc,
             }, 'models/best_model.pth')
-            print(f"  ✓ Best model saved! (val_loss: {val_loss:.4f})")
+            print(f"Best model saved! (val_loss: {val_loss:.4f})")
     
     # Plot training history
-    print("\n📈 Plotting training history...")
+    print("\nPlotting training history...")
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
     
     # Loss plot
@@ -239,9 +239,9 @@ def main():
     
     plt.tight_layout()
     plt.savefig('outputs/visualizations/training_history.png', dpi=150)
-    print("  ✓ Saved to: outputs/visualizations/training_history.png")
+    print("Saved to: outputs/visualizations/training_history.png")
     
-    print("\n✅ Training complete!")
+    print("\nTraining complete!")
     print(f"   Best validation loss: {best_val_loss:.4f}")
     print(f"   Model saved to: models/best_model.pth")
 

@@ -70,7 +70,7 @@ def calculate_metrics_at_threshold(predictions_df, threshold):
 
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"🔧 Using device: {device}\n")
+    print(f"Using device: {device}\n")
     
     # Load model
     model = create_model(num_classes=2, pretrained=False)
@@ -80,7 +80,7 @@ def main():
     model.eval()
     
     # Get predictions on validation set
-    print("📊 Getting predictions on validation set...")
+    print("Getting predictions on validation set...")
     predictions_df = get_predictions_with_probabilities(
         model, 
         'data/processed/val/annotations.csv',
@@ -89,7 +89,7 @@ def main():
     )
     
     # Test multiple thresholds
-    print("\n🔍 Testing different confidence thresholds...\n")
+    print("\nTesting different confidence thresholds...\n")
     thresholds = np.arange(0.1, 1.0, 0.05)
     results = []
     
@@ -107,16 +107,15 @@ def main():
     best_acc_idx = results_df['accuracy'].idxmax()
     best_acc_threshold = results_df.loc[best_acc_idx]
     
-    print("=" * 70)
-    print("📈 OPTIMAL THRESHOLDS")
-    print("=" * 70)
+    print("OPTIMAL THRESHOLDS")
     
-    print(f"\n🎯 Best F1-Score: {best_f1_threshold['f1_score']:.4f} at threshold {best_f1_threshold['threshold']:.2f}")
+    
+    print(f"\nBest F1-Score: {best_f1_threshold['f1_score']:.4f} at threshold {best_f1_threshold['threshold']:.2f}")
     print(f"   Accuracy:  {best_f1_threshold['accuracy']:.4f}")
     print(f"   Precision: {best_f1_threshold['precision']:.4f}")
     print(f"   Recall:    {best_f1_threshold['recall']:.4f}")
     
-    print(f"\n🎯 Best Accuracy: {best_acc_threshold['accuracy']:.4f} at threshold {best_acc_threshold['threshold']:.2f}")
+    print(f"\nBest Accuracy: {best_acc_threshold['accuracy']:.4f} at threshold {best_acc_threshold['threshold']:.2f}")
     print(f"   F1-Score:  {best_acc_threshold['f1_score']:.4f}")
     print(f"   Precision: {best_acc_threshold['precision']:.4f}")
     print(f"   Recall:    {best_acc_threshold['recall']:.4f}")
@@ -191,11 +190,11 @@ def main():
     
     plt.tight_layout()
     plt.savefig('outputs/visualizations/threshold_optimization.png', dpi=150, bbox_inches='tight')
-    print("\n✓ Saved visualization to: outputs/visualizations/threshold_optimization.png")
+    print("\nSaved visualization to: outputs/visualizations/threshold_optimization.png")
     
     # Save results
     results_df.to_csv('outputs/results/threshold_analysis.csv', index=False)
-    print("✓ Saved detailed results to: outputs/results/threshold_analysis.csv")
+    print("Saved detailed results to: outputs/results/threshold_analysis.csv")
     
     print(f"\nRECOMMENDATION: Use threshold = {best_f1_threshold['threshold']:.2f} for balanced performance")
 
